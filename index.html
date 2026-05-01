@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta http-equiv="refresh" content="300">
+    <meta name="google-site-verification" content="rLOMR4PL7PMZyephNkDjL8IsxTZkNuZDKKToXhMZDyM">
+    <title>J.K. College Purulia | Professional Weather Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Header with logos -->
+        <header class="dashboard-header">
+            <div class="logo-group">
+                <img src="https://ncsm.gov.in/wp-content/uploads/2013/12/NCSM-Logo.png" alt="NCSM Logo" class="header-logo">
+                <div class="title-block">
+                    <h1>Jagannath Kishore College, Purulia</h1>
+                    <p>Collaboration with District Science Centre, Purulia</p>
+                    <span class="subtitle">A unit of National Council of Science Museums | Ministry of Culture, Government of India</span>
+                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/be/J._K._College_logo.png/250px-J._K._College_logo.png" alt="JK College Logo" class="header-logo">
+            </div>
+        </header>
+
+        <!-- Hero / Banner Section -->
+        <div class="hero-banner">
+            <div class="hero-overlay">
+                <div class="hero-content">
+                    <h2>Live Weather Intelligence</h2>
+                    <div class="datetime-badge" id="dateTime"></div>
+                    <div class="weather-icon-row">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/066/165/758/small_2x/colorful-3d-global-weather-elements-with-sun-rain-and-cloud-png.png" alt="weather icon" class="floating-icon">
+                        <img src="https://cdn.dribbble.com/userupload/25398855/file/original-b39f61791073c4efb3ba40bf4167eb31.gif" alt="animated weather" class="floating-icon-gif">
+                    <p style="background-image: url('JKC.jpg');">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="dashboard-main">
+            <!-- Primary metrics grid -->
+            <div class="grid-primary">
+                <!-- Temperature Card -->
+                <div class="card card-temp">
+                    <div class="chart-overlay-bg">
+                        <canvas id="temperatureChart" class="temp-canvas-bg"></canvas>
+                    </div>
+                    <div class="temp-content">
+                        <div class="current-temp-section">
+                            <div class="thermo-wrapper">
+                                <div class="thermometer-viz">
+                                    <div class="mercury-fill" id="thermometer-mercury"></div>
+                                </div>
+                            </div>
+                            <div class="temp-numbers">
+                                <span class="big-temp" id="current-temp">--°C</span>
+                                <div class="temp-labels"><span>0°C</span><span>25°C</span><span>50°C</span></div>
+                            </div>
+                        </div>
+                        <div class="highlow-panel">
+                            <div class="hl-item"><i class="fas fa-arrow-up"></i> <span>High</span> <strong id="high-temp">--°C</strong></div>
+                            <div class="hl-item"><i class="fas fa-arrow-down"></i> <span>Low</span> <strong id="low-temp">--°C</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sun & Moon Card -->
+                <div class="card card-sunmoon">
+                    <div class="card-header"><i class="fas fa-sun"></i><h3>Sun & Moon</h3></div>
+                    <div class="sun-moon-grid">
+                        <div class="sun-container">
+                            <div class="sun-arc"></div>
+                            <div class="sun-dot" id="sun"></div>
+                        </div>
+                        <div class="sun-times"><i class="fas fa-sunrise"></i> <span id="sunrise-time">--:--</span> &nbsp;|&nbsp; <i class="fas fa-sunset"></i> <span id="sunset-time">--:--</span></div>
+                        <div class="moon-phase-box">
+                            <div class="moon-icon" id="moon-phase-icon">🌑</div>
+                            <div><span id="moon-phase-details">Loading...</span> • <span id="moon-illumination">0%</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wind Card -->
+                <div class="card card-wind">
+                    <div class="card-header"><i class="fas fa-wind"></i><h3>Wind Conditions</h3><span class="gust-badge">Gust: <span id="wind-gust">-- km/h</span></span></div>
+                    <div class="compass-wrapper">
+                        <div class="compass-ring">
+                            <div class="compass-marks"><span>N</span><span>NE</span><span>E</span><span>SE</span><span>S</span><span>SW</span><span>W</span><span>NW</span></div>
+                            <div class="needle-rotate" id="needle"><div class="needle-arrow"></div></div>
+                            <div class="wind-speed-center" id="compass-wind-speed">--</div>
+                        </div>
+                    </div>
+                    <div class="wind-stats-row">
+                        <div><i class="fas fa-tachometer-alt"></i> <span id="wind-speed">-- km/h</span></div>
+                        <div><i class="fas fa-compass"></i> <span id="wind-direction">--</span></div>
+                        <div><i class="fas fa-arrow-right"></i> <span id="wind-angle">--°</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metrics row -->
+            <div class="metrics-row">
+                <div class="metric-item"><i class="fas fa-tint"></i><span id="humidity">--%</span><label>Humidity</label></div>
+                <div class="metric-item"><i class="fas fa-gauge-high"></i><span id="pressure">-- hPa</span><label>Pressure</label></div>
+                <div class="metric-item"><i class="fas fa-sun"></i><span id="uv-index">--</span><label>UV Index</label></div>
+                <div class="metric-item"><i class="fas fa-leaf"></i><span id="aqi">--</span><label>AQI</label></div>
+                <div class="metric-item"><i class="fas fa-smog"></i><span id="co-level">-- ppm</span><label>CO</label></div>
+                <div class="metric-item"><i class="fas fa-dust"></i><span id="pm2.5">-- µg/m³</span><label>PM2.5</label></div>
+                <div class="metric-item"><i class="fas fa-dust"></i><span id="pm10">-- µg/m³</span><label>PM10</label></div>
+            </div>
+            <div class="metrics-row">
+                <div class="metric-item"><i class="fas fa-sun"></i><span id="Visibility">--</span><label>Visibility</label></div>
+                <div class="metric-item"><i class="fas fa-smog"></i><span id="NO2-level">-- ppm</span><label>NO2</label></div>
+            </div>
+
+            <!-- Extended Forecast & Hourly -->
+            <div class="extended-forecast-row">
+                <div class="forecast-card">
+                    <div class="card-header"><i class="fas fa-calendar-week"></i><h3>7-Day Outlook</h3></div>
+                    <div class="forecast-grid" id="weeklyForecastGrid"></div>
+                </div>
+                <div class="hourly-card">
+                    <div class="card-header"><i class="fas fa-chart-line"></i><h3>Hourly Temperature Profile</h3><button id="refreshHourlyBtn" class="subtle-btn"><i class="fas fa-sync-alt"></i> Refresh</button></div>
+                    <div class="hourly-chart-container"><canvas id="hourlyTempChartMain" width="600" height="280" style="max-height:280px; width:100%"></canvas></div>
+                    <div class="hourly-scroll-list" id="hourlyScrollList"></div>
+                </div>
+            </div>
+
+            <!-- Marquee -->
+            <div class="innovation-marquee">
+                <marquee behavior="scroll" direction="left" scrollamount="5">
+                    🌟 Developed & Powered by Innovation Hub • District Science Centre, Purulia • Members: Hrishikesh Mahato, Azhar Hussain Ansary, Atish Chandra Mahato, Anjan Bauri, Aditya Singh, Anita Mudi, Archana Haldar, Priti Mahato, Trina Mandal, Sourasis Mahato, Gourav Gorain, Shantiram Mahato, Jishu Banerjee, Subham Murmu, Chandan Mukherjee, Sandip Mahato, Tarun Singh Mura, Souvik Mahanty, Sandeep Paramanik, Priyanka Mahato, Sudip Mahato, Rupak Ganguly, Sourav Kumar, Laxmikanta Mahato, Prashanta Mahato, Pradip Kumar, Mahashweta Layek, Ujjal Rajak, Debjoyti Rishi, Jayashri Mahato, Sudip Chandra <i class="fas fa-microchip"></i>
+                </marquee>
+            </div>
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <div class="qr-credit">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=85x85&data=https://dscinnovationhub.github.io/dscinnovationhub/#" alt="QR Innovation Hub">
+                    <p>Scan for Innovation Hub Purulia • <span>© All Copyright Reserved 2026</span></p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
